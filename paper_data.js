@@ -1,0 +1,855 @@
+window.PAPER_RESEARCH_DATA = {
+  "date": "2026-10-19",
+  "latestReadWeek": "2026-10-19",
+  "main": [
+    {
+      "id": "P07",
+      "title": "Unveiling Privacy Risks in LLM Agent Memory",
+      "short": "MEXTRA",
+      "category": "隐私攻击与推断",
+      "framework": "EHRAgent；RAP",
+      "organization": "query-solution 静态经验库；MEXTRA 是攻击",
+      "retrieval": "EHR edit distance top4；RAP MiniLM cosine top3",
+      "datasets": "MIMIC-III；WebShop",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "以医疗/购物任务的 query–solution 记录建库；测原文记忆提取。",
+      "notes": "各200记忆；攻击提取的是存储查询，不是模型训练数据",
+      "locator": "§2；§4.1；Appendix B",
+      "url": "https://aclanthology.org/2025.acl-long.1227/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P08",
+      "title": "ADAM: A Systematic Data Extraction Attack on Agent Memory via Adaptive Querying",
+      "short": "ADAM",
+      "category": "隐私攻击与推断",
+      "framework": "EHRAgent；ReAct；RAP",
+      "organization": "query-solution 经验库；ADAM 是自适应攻击",
+      "retrieval": "all-MiniLM-L6-v2 cosine；默认k=3",
+      "datasets": "MIMIC-III；HotpotQA；WebShop",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "Agent任务与执行轨迹",
+        "RAG与检索问答"
+      ],
+      "data_use": "三类任务构建经验库；测自适应查询的提取覆盖和效率。",
+      "notes": "此文改为统一向量检索，不能直接沿用 MEXTRA 的 EHR edit-distance 配置",
+      "locator": "§2.1；§4.1",
+      "url": "https://arxiv.org/abs/2604.09747",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P09",
+      "title": "Isolated but Exposed: Persistence-Based Memory Extraction Attack on LLM Agents",
+      "short": "Isolated but Exposed / SPORE",
+      "category": "隐私攻击与推断",
+      "framework": "MemEngine：LTMemory/GAMemory/SCMemory",
+      "organization": "LTM＋STM；恶意工具返回持久提取载荷",
+      "retrieval": "E5-base；每次2–6记录",
+      "datasets": "HealthCareMagic-100k-en；LoCoMo；TREC-COVID（优化）；MS MARCO（良性查询）",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "长期对话与用户记忆",
+        "RAG与检索问答"
+      ],
+      "data_use": "HealthCareMagic/LoCoMo建受害者记忆；TREC-COVID用于载荷优化；MS MARCO用于正常查询/效用检查。",
+      "notes": "SPORE 是该文攻击名；与 P12 Spore 为不同论文",
+      "locator": "§5.1；§6.1；Appendix D",
+      "url": "https://arxiv.org/abs/2607.23444",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P10",
+      "title": "Inferring Hidden User Models from the Behavior of Personalized LLM Agents",
+      "short": "UMPeek",
+      "category": "隐私攻击与推断",
+      "framework": "Mem0；Graphiti；LangMem+LangGraph；云端 Google Memory Bank/AWS AgentCore/Mem0；OpenClaw",
+      "organization": "事实/时间图谱/画像影响可见动作",
+      "retrieval": "保持各后端原生上下文组装；基准 Qwen3-14B",
+      "datasets": "PersonaMem-v2；PersonaLens；ETAPP；LoCoMo；合成 retained targets",
+      "datasetCategories": [
+        "长期对话与用户记忆",
+        "隐私与用户画像"
+      ],
+      "data_use": "对话/偏好/任务数据构成用户状态；测属性恢复与行为预测；云端另用合成 retained targets。",
+      "notes": "UMPeek 推断隐含用户状态；云端只在确认保留的目标上评测",
+      "locator": "§IV Benchmarks/Backends；§VI",
+      "url": "https://arxiv.org/abs/2609.03815",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P11",
+      "title": "MRMMIA: Membership Inference Attacks on Memory in Chat Agents",
+      "short": "MRMMIA",
+      "category": "隐私攻击与推断",
+      "framework": "Mem0；MemGPT",
+      "organization": "聊天事实/会话记忆库",
+      "retrieval": "后端原生；Qwen2.5-7B vLLM，5个 recall probes",
+      "datasets": "PerLTQA；LoCoMo；MSC",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "按用户将候选记忆分为member/non-member；测成员推断，不能当成直接恢复未知记录。",
+      "notes": "按用户构造成员/非成员；MRMMIA是成员推断方法",
+      "locator": "§5.1；Appendix A–B",
+      "url": "https://arxiv.org/abs/2605.27825",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P12",
+      "title": "Spore: Efficient and Training-Free Privacy Extraction Attack on LLMs via Inference-Time Hybrid Probing",
+      "short": "Spore",
+      "category": "隐私攻击与推断",
+      "framework": "LLM 的敏感上下文测试；未评测持久 Agent Memory 框架",
+      "organization": "敏感信息放入上下文；推理时 hybrid probing",
+      "retrieval": "无持久记忆 retriever",
+      "datasets": "TrustLLM 的560 privacy queries",
+      "datasetCategories": [
+        "隐私与用户画像"
+      ],
+      "data_use": "TrustLLM隐私查询将敏感信息放进推理上下文；不是大型长期memory检索评测。",
+      "notes": "邻近研究，不能把训练-free extraction 当成 Agent Memory 实验",
+      "locator": "§4.1 Models/Datasets",
+      "url": "https://arxiv.org/abs/2604.23711",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P13",
+      "title": "Deployment-Time Memorization in Foundation-Model Agents",
+      "short": "Deployment-Time Memorization",
+      "category": "隐私防御与删除评测",
+      "framework": "自建多层 memory QA harness",
+      "organization": "raw turns/key-facts/one-sentence 派生记忆",
+      "retrieval": "all-MiniLM-L6-v2 cosine；k=1/3/6",
+      "datasets": "LongMemEval oracle split（500）；LoCoMo（50）；合成 canaries",
+      "datasetCategories": [
+        "长期对话与用户记忆",
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "对话历史形成raw/fact/summary层；植入独立canary测泄露；同时测个性化问答和删除后残留。",
+      "notes": "用于部署时泄露和删除残留；不是独立发布的通用 memory 产品",
+      "locator": "§3.1–3.3；Appendix A.2–A.4",
+      "url": "https://arxiv.org/abs/2606.10062",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P14",
+      "title": "What to Remember, What to Reveal: Privacy-Aware Memory for Conversational Agents",
+      "short": "SP-Mem",
+      "category": "隐私防御与删除评测",
+      "framework": "SP-Mem；比较 Zep/Mem0/MemOS/Full-context",
+      "organization": "sanitized memory＋隔离 private values；任务需求/consent 控制",
+      "retrieval": "任务需要时通过受控 value lookup 获取私值",
+      "datasets": "自建 privacy-aware benchmark（评测100用户、2100历史、5400查询）",
+      "datasetCategories": [
+        "隐私与用户画像",
+        "长期对话与用户记忆",
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "自建历史、带任务需求及同意条件的查询；联合测任务效用和敏感值披露。",
+      "notes": "属于非DP防御；不把全文生成量21000/54000混为本次评测样本",
+      "locator": "§2；§3；§4.1",
+      "url": "https://arxiv.org/abs/2608.16551",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P15",
+      "title": "DP-MemView: A Memory Interface for Attribute-Level Transcript Privacy in Long-Term LLM Agents",
+      "short": "DP-MemView",
+      "category": "隐私防御与删除评测",
+      "framework": "DP-MemView（可信 memory-view 接口）",
+      "organization": "raw memory 隔离；公共 view 支持集；逐属性累计预算",
+      "retrieval": "bounded scorer＋exponential mechanism；完整 read-set charging",
+      "datasets": "PairedMem（320对×32查询）；LoCoMo；Medical Question Answering Datasets；EmpatheticDialogues（80对 transfer）",
+      "datasetCategories": [
+        "隐私与用户画像",
+        "长期对话与用户记忆",
+        "医疗与专业领域",
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "PairedMem配对敏感属性世界作为主评测；另三类语料作为受控移植背景；测多轮属性区分及效用。",
+      "notes": "后三者用于受控背景移植，非原始任务原生全量benchmark；整个 transcript 保证依赖C1–C6",
+      "locator": "§2–4；Appendix C.1–C.5；Theorem 1",
+      "url": "https://arxiv.org/abs/2608.03130",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P16",
+      "title": "MemPot: Defending Against Memory Extraction Attack with Optimized Honeypots",
+      "short": "MemPot",
+      "category": "隐私防御与删除评测",
+      "framework": "外部RAG库；EHRAgent；WebShop RAP",
+      "organization": "记忆库加入优化 honeypot；MemPot为检测防御",
+      "retrieval": "all-mpnet-base-v2；外部top4；经验库top3/4",
+      "datasets": "HealthMagicCare/HealthCareMagic；Pokémon；EHRAgent任务；WebShop",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "Agent任务与执行轨迹",
+        "RAG与检索问答"
+      ],
+      "data_use": "医疗/Pokémon作为外部语料库；EHRAgent/RAP作为内部经验库；测蜜罐检测和正常任务效用。",
+      "notes": "非DP；医疗内部经验来源未在已读设置节中单独核定",
+      "locator": "§实验设置；Appendix B.1；C.1–C.2",
+      "url": "https://arxiv.org/abs/2602.07517",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P17",
+      "title": "What Deserves Memory: Adaptive Memory Distillation for LLM Agents",
+      "short": "What Deserves Memory / NEMORI",
+      "category": "记忆组织与能力",
+      "framework": "NEMORI；比较 LangMem/Zep/Mem0/A-MEM/MemoryOS",
+      "organization": "episodic＋semantic 双库；预测误差驱动蒸馏与合并",
+      "retrieval": "text-embedding-3-small；双库独立top-k/m",
+      "datasets": "LoCoMo；LongMemEval-S",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "LoCoMo/LongMemEval-S历史用于双库构建，问题用于长程记忆QA；无攻击设置。",
+      "notes": "重视写入价值/巩固；论文 baseline 与自家实现分开",
+      "locator": "§3.2–3.4；§4.1",
+      "url": "https://aclanthology.org/2026.acl-long.1607/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P18",
+      "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+      "short": "How Memory Management Impacts LLM Agents",
+      "category": "记忆组织与能力",
+      "framework": "RegAgent；EHRAgent；AgentDriver；CIC-IoT Agent",
+      "organization": "query-execution 经验库；比较写入/删除策略",
+      "retrieval": "各Agent相似度检索；质量 evaluator 决定写入",
+      "datasets": "合成线性回归；MIMIC-III；nuScenes；CIC-IoT2023",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "医疗与专业领域"
+      ],
+      "data_use": "回归、医疗、驾驶、IoT四种任务产生可复用执行记录；测记忆管理对后续任务行为的影响。",
+      "notes": "研究 experience-following；四种环境不共享同一记忆框架",
+      "locator": "§3.1；Appendix A.1–A.4",
+      "url": "https://aclanthology.org/2026.acl-long.27/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P19",
+      "title": "A-MEM: Agentic Memory for LLM Agents",
+      "short": "A-MEM",
+      "category": "记忆组织与能力",
+      "framework": "A-MEM；比较 ReadAgent/MemoryBank/MemGPT",
+      "organization": "Zettelkasten structured notes；动态links与evolution",
+      "retrieval": "all-MiniLM-L6-v2 cosine；主要k=10＋关联note",
+      "datasets": "LoCoMo；DialSim",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "长对话构建笔记和关联；QA测记忆组织收益；不是直接跨层污染或删除实验。",
+      "notes": "对话知识组织；不同版本子集问题量不直接横比",
+      "locator": "§3；§4.1–4.2",
+      "url": "https://arxiv.org/abs/2502.12110",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P20",
+      "title": "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents",
+      "short": "GAM",
+      "category": "记忆组织与能力",
+      "framework": "GAM；比较 MemoryBank/ReadAgent/MemGPT/MemoryOS/Mem0/A-Mem",
+      "organization": "即时交互的event progression graph＋长期topic associative network；语义变化时巩固",
+      "retrieval": "MiniLM embeddings＋ms-marco MiniLM cross-encoder；k=10",
+      "datasets": "LoCoMo；LongDialQA",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "LoCoMo和多方长对话LongDialQA构图；测问答及效率；事件图与主题网络属于同一系统两层。",
+      "notes": "TV脚本多方对话；不要与 Generative Agent Memory 的 GAMemory 混名",
+      "locator": "§3；§4.1",
+      "url": "https://aclanthology.org/2026.acl-long.1600/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P21",
+      "title": "MEMOREPAIR: Barrier-First Cascade Repair in Agentic Memory",
+      "short": "MemoRepair",
+      "category": "删除、更新与修复",
+      "framework": "MemoRepair；比较 Mem0/Graphiti/MemR3/TierMem/A-MEM/O-Mem",
+      "organization": "依赖cascade；先撤下失效内容，再验证successor；可含 neural skill",
+      "retrieval": "宿主原生检索；修复按依赖图/闭包选择",
+      "datasets": "ToolBench/StableToolBench；MemoryArena；ToolLLaMA-7B LoRA artifact",
+      "datasetCategories": [
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "工具任务/多会话任务用于构造依赖和失效来源；包含神经技能LoRA artifact；修复评分与最终任务成功需分开。",
+      "notes": "数据集任务评分含依赖诊断score，不能全部当真实最终任务成功率",
+      "locator": "§2；§3 Benchmarks/Baselines",
+      "url": "https://arxiv.org/abs/2605.07242",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P22",
+      "title": "Forgetting Without Restarting: Execution-State Unlearning for Stateful LLM Agents",
+      "short": "Forgetting Without Restarting",
+      "category": "删除、更新与修复",
+      "framework": "自建 Transformers KVEngine/ArtifactGraph/CheckpointStore",
+      "organization": "运行时KV＋transcript/summary/pending tools；选择性replay",
+      "retrieval": "显式cache crop/prefill/generate；不等同现成Mem0插件",
+      "datasets": "LongMemEval（100）；ToolSandbox（100）；AgentDojo（80）转换episodes",
+      "datasetCategories": [
+        "长期对话与用户记忆",
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "三个基准被转换成有状态episodes；测删除后的反事实行为与重放成本；不是原生全量基准评测。",
+      "notes": "反事实重放；完整provenance在harness中为oracle source IDs",
+      "locator": "Experiments: Implementation and Setup",
+      "url": "https://arxiv.org/abs/2609.04875",
+      "week": "2026-10-19",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P23",
+      "title": "From Faulty Memories to Corrected Actions: Dependency-Guided Rollback Repair for Memory-Augmented Agents",
+      "short": "Dependency-Guided Rollback Repair",
+      "category": "删除、更新与修复",
+      "framework": "自建 memory-augmented tool-agent rollback harness",
+      "organization": "input-step-memory异构依赖图；repair与selective replay",
+      "retrieval": "故障诊断标识输入；传播依赖、清理、重推导",
+      "datasets": "自建150 shopping/travel/support cases；LongMemEval-V2转换50 stress trajectories",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "长期对话与用户记忆"
+      ],
+      "data_use": "150个购物/旅行/客服受控案例作主评测；另50条LongMemEval-V2转换轨迹作压力测试；错误源已知。",
+      "notes": "评估已诊断故障后的恢复，不能据此声称故障检测能力",
+      "locator": "§3–5；§4 Controlled Benchmark",
+      "url": "https://arxiv.org/abs/2608.10502",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P24",
+      "title": "Agentic Unlearning: When LLM Agent Meets Machine Unlearning",
+      "short": "Agentic Unlearning / SBU",
+      "category": "删除、更新与修复",
+      "framework": "SBU（II-Medical-8B＋外部memory）",
+      "organization": "episodic/semantic/reflection＋parametric；双路径同步遗忘",
+      "retrieval": "dependency closure invalidation＋参数unlearning",
+      "datasets": "MedMCQA；MedQA；MedReason",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "通用问答与推理"
+      ],
+      "data_use": "公共医疗考试/推理QA用于构造参数与外部memory双路径遗忘；不是患者数据库隐私实验。",
+      "notes": "公共医疗考试QA而非真实患者EHR；QF=100/1000",
+      "locator": "§3；§4 Dataset Summary/Implementation",
+      "url": "https://arxiv.org/abs/2602.17692",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P25",
+      "title": "Securing LLM-Agent Long-Term Memory Against Poisoning: Non-Malleable, Origin-Bound Authority with Machine-Checked Guarantees",
+      "short": "Securing LLM-Agent Long-Term Memory",
+      "category": "记忆投毒与完整性",
+      "framework": "TMA-NM reference harness；Mem0配套实验",
+      "organization": "origin-bound authority；memory laundering；TLA+验证",
+      "retrieval": "源权威标签与发布校验；检索细节依宿主",
+      "datasets": "MEM-INV-Bench（12领域、5工具类别）；合成攻击/良性提升场景",
+      "datasetCategories": [
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "自建MEM-INV-Bench用于持久化投毒、来源洗白及正常权限提升；含模型检验和Mem0实证。",
+      "notes": "包含实证benchmark与machine-checked model，非纯理论无数据论文",
+      "locator": "§V；§VI；Mem0子实验",
+      "url": "https://arxiv.org/abs/2606.24322",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P26",
+      "title": "MemLeak: Diagnosing Information Leaks in Multimodal Agent Memory",
+      "short": "MemLeak",
+      "category": "隐私防御与删除评测",
+      "framework": "Oracle/Naive/Mem0/LongContext/semantic-deletion variants",
+      "organization": "文本事实＋用户图片＋派生关联；IPG描述",
+      "retrieval": "Mem0原生semantic search；VLM retained-image probing",
+      "datasets": "MemLeak（113合成profiles）；38多模态profiles；生成图片＋Unsplash照片",
+      "datasetCategories": [
+        "隐私与用户画像",
+        "多模态记忆",
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "合成用户画像构建事实/关联；图片用于跨模态残留测试；完整Mem0实验与独立VLM探测需区分。",
+      "notes": "不要把VLM独立残留实验与完整Mem0端到端实验混合",
+      "locator": "§3.1；§4；Appendix B.1",
+      "url": "https://arxiv.org/abs/2606.29788",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P27",
+      "title": "Stashbird: Efficient Speaker-Indexed Memory for Conversational Agents",
+      "short": "Stashbird",
+      "category": "记忆组织与能力",
+      "framework": "Stashbird；复现 Mem0/Graphiti/Hindsight；其余参考表",
+      "organization": "episodes→semantic relations→communities；provenance",
+      "retrieval": "text-embedding-3-large；hybrid top60＋RRF＋rerank→30 evidence",
+      "datasets": "LongMemEval-S；LoCoMo；EverMemBench；GroupMemBench",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "个人及群聊历史用于静态QA评测；增量更新和删除为系统能力，不能据此当成已完成安全实验。",
+      "notes": "主评测静态QA；增量更新/删除是实现能力而非已验证结果",
+      "locator": "§2；§3.1–3.3",
+      "url": "https://arxiv.org/abs/2609.34242",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P28",
+      "title": "From Untrusted Input to Trusted Memory: A Systematic Study of Memory Poisoning Attacks in LLM Agents",
+      "short": "From Untrusted Input to Trusted Memory",
+      "category": "记忆投毒与完整性",
+      "framework": "OpenClaw；HERMES（GPT-OSS-120B）",
+      "organization": "宿主默认持久记忆写入及跨session读取",
+      "retrieval": "各宿主原生，不统一替换retriever",
+      "datasets": "MPBench（3240攻击＋2997良性）",
+      "datasetCategories": [
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "MPBench攻击及良性例进入OpenClaw/HERMES原生写入流程；测成功写入和后续session持久影响。",
+      "notes": "六攻击类/七领域；ASR是写入率，RSR按成功写入条件化",
+      "locator": "§4.1.1–4.1.3",
+      "url": "https://arxiv.org/abs/2606.04329",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P29",
+      "title": "When Continual Learning Moves to Memory: A Study of Experience Reuse in LLM Agents",
+      "short": "When Continual Learning Moves to Memory",
+      "category": "记忆组织与能力",
+      "framework": "ReAct-style Agent＋ReMe",
+      "organization": "经验池；Raw/Insight；task/insight 存储粒度",
+      "retrieval": "task级或step级experience retrieval",
+      "datasets": "ALFWorld；BabyAI",
+      "datasetCategories": [
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "ALFWorld/BabyAI任务序列生成Raw或Insight经验；比较两个阶段的复用、迁移和干扰。",
+      "notes": "两个任务阶段复用；研究非参数持续学习的干扰与迁移",
+      "locator": "§2.1–2.4；Appendix 实现",
+      "url": "https://arxiv.org/abs/2604.27003",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P30",
+      "title": "MemRefine: LLM-Guided Compression for Long-Term Agent Memory",
+      "short": "MemRefine",
+      "category": "记忆组织与能力",
+      "framework": "A-MEM-style factual graph；Mem0；MemRefine后置压缩",
+      "organization": "graph notes/processed facts；LLM预算压缩",
+      "retrieval": "保留宿主检索；压缩发生于构建后、检索前",
+      "datasets": "LoCoMo（10样本1986题）；3×/10× LoCoMo-style；LongMemEval-S（60题）",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "LoCoMo及扩增历史先建库后压缩；LongMemEval-S子集测泛化；QA与token预算联合比较。",
+      "notes": "A-MEM-style省略aux context/tags；不能称原版A-MEM无改动复现",
+      "locator": "§4 Datasets/Memory frameworks；Appendix J",
+      "url": "https://arxiv.org/abs/2606.13177",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P31",
+      "title": "MAFIA: Query-Only Memory Attacks via Probing and Factual Injection against Audited LLM Agents",
+      "short": "MAFIA",
+      "category": "记忆投毒与完整性",
+      "framework": "EHRAgent；RAP；Data Interpreter",
+      "organization": "query-only factual poisoning，审核后write-back",
+      "retrieval": "e5-small-v2 cosine；k=4（WebShop3）",
+      "datasets": "MIMIC-III/eICU＋EHRSQL memory pool；WebShop；HuggingFace Hub/code task pool",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "医疗/购物/代码任务历史用于大经验池；query-only注入后检索竞争；代码池各组成源版本未逐个确认。",
+      "notes": "MAFIA是攻击；Data Interpreter合成历史来自多个coding/instruction源，未逐个核定版本",
+      "locator": "§5.1；Appendix B.1",
+      "url": "https://arxiv.org/abs/2608.03844",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P32",
+      "title": "SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model",
+      "short": "SafeRAG",
+      "category": "邻近RAG安全",
+      "framework": "标准RAG pipeline（DPR/BM25/Hybrid/Hybrid-Rerank）",
+      "organization": "索引→检索→filter→生成；无在线记忆写入",
+      "retrieval": "bge-base-zh-v1.5；bge-reranker-base；NLI/SKR filters",
+      "datasets": "SafeRAG：人工中文新闻QA，Noise/Conflict/Toxicity/DoS",
+      "datasetCategories": [
+        "RAG与检索问答",
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "中文新闻QA及四类恶意检索上下文用于RAG安全评测；不是在线积累的对话记忆数据。",
+      "notes": "可借鉴干扰对照；DoS拒绝信号与Top-k记忆crowding不同",
+      "locator": "§3 Dataset；§5.1",
+      "url": "https://aclanthology.org/2025.acl-long.230/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P33",
+      "title": "MedMemoryBench: Benchmarking Agent Memory in Personalized Healthcare",
+      "short": "MedMemoryBench",
+      "category": "记忆评测与基准",
+      "framework": "Mem0/A-Mem/MemOS/Letta/MIRIX/MemRL/ReMem/LightMem/HippoRAG-v2；RAG controls",
+      "organization": "flat/graph/multi-store等；流式evaluate-while-constructing",
+      "retrieval": "统一BGE-small-v1.5；默认top5，chunk4096",
+      "datasets": "MedMemoryBench（约2000 sessions/16000 turns）；LoCoMo noise补实验",
+      "datasetCategories": [
+        "医疗与专业领域",
+        "长期对话与用户记忆"
+      ],
+      "data_use": "基于临床画像生成全年诊疗交互并加入陷阱/噪声；边构建边评测；LoCoMo噪声作补实验。",
+      "notes": "合成临床轨迹；GPT-5.1统一backbone；不可视为患者真实病例",
+      "locator": "§数据构建；§6.1",
+      "url": "https://arxiv.org/abs/2605.11814",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P34",
+      "title": "Selective Memory Retention for Long-Horizon LLM Agents",
+      "short": "Selective Memory Retention / TraceRetain",
+      "category": "记忆组织与能力",
+      "framework": "TraceRetain；冻结ReAct Agent",
+      "organization": "trajectory summaries；K=50有界retention/eviction",
+      "retrieval": "text-embedding-3-large；top5",
+      "datasets": "ALFWorld（clean/noisy-write/held-out）；75%合成distractors",
+      "datasetCategories": [
+        "Agent任务与执行轨迹"
+      ],
+      "data_use": "ALFWorld轨迹摘要建库；加入同任务失败distractors构造noisy-write；比较正常与有噪声retention。",
+      "notes": "正文实际主实验为ALFWorld；WebShop只是邻近环境讨论，未填为已测数据集",
+      "locator": "§2；§3；Appendix B",
+      "url": "https://arxiv.org/abs/2606.29178",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P35",
+      "title": "LazyMem: Retrieve Broadly, Construct Selectively for Efficient Long-Term Agent Memory",
+      "short": "LazyMem",
+      "category": "记忆组织与能力",
+      "framework": "LazyMem（Qwen3-4B memory processor）",
+      "organization": "按query构建；retrieval→windows→Keep/Drop＋compress",
+      "retrieval": "Qwen3-Embedding-8B＋BM25 hybrid",
+      "datasets": "LongMemEval（360/40/100 train/val/test）；LoCoMo（最后2对话314题）",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "LongMemEval训练/验证/测试memory processor；LoCoMo仅作314题泛化测试；查询时Keep/Drop及压缩。",
+      "notes": "SFT＋GRPO训练；LoCoMo仅测试；Qwen3-32B最终answer model",
+      "locator": "§3.1；§4.1",
+      "url": "https://arxiv.org/abs/2607.22690",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P36",
+      "title": "CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents",
+      "short": "CLAG",
+      "category": "记忆组织与能力",
+      "framework": "CLAG；比较 RAG/A-mem/MemoryOS/GAM",
+      "organization": "agent-driven clustering；自适应组织",
+      "retrieval": "MiniLM-L6-v2 semantic retrieval",
+      "datasets": "LoCoMo；HotpotQA；BioASQ（HotpotQA-style转换）",
+      "datasetCategories": [
+        "长期对话与用户记忆",
+        "RAG与检索问答",
+        "医疗与专业领域"
+      ],
+      "data_use": "LoCoMo对话QA、HotpotQA和转换BioASQ比较簇式组织；三者任务与构造方式不同。",
+      "notes": "SLM backbones 0.6B/1B/1.5B；不把转换BioASQ视为原生形式",
+      "locator": "§3；§4.1–4.3",
+      "url": "https://aclanthology.org/2026.findings-acl.824/",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P37",
+      "title": "Inference Cost Attacks for Retrieval-Augmented Large Language Models",
+      "short": "Inference Cost Attacks / CREEP",
+      "category": "邻近RAG安全",
+      "framework": "标准RAG受害者；CREEP攻击框架；RA-ICA指检索增强推理成本攻击问题",
+      "organization": "检索外部文档；无在线记忆管理实验",
+      "retrieval": "Contriever top5；black-box outputs/tokens/sources",
+      "datasets": "Natural Questions；HotpotQA；MS MARCO",
+      "datasetCategories": [
+        "RAG与检索问答"
+      ],
+      "data_use": "三类QA/检索语料用于RAG恶意文档成本攻击；测token/延迟开销；不等于长期记忆数量洪泛。",
+      "notes": "成本增长攻击与目标记忆挤出不同；候选材料简称与正文RA-ICA并记",
+      "locator": "§4.1.1–4.1.2",
+      "url": "https://arxiv.org/abs/2606.02643",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P38",
+      "title": "Backdoor Attacks via Machine Unlearning",
+      "short": "Backdoor Attacks via Machine Unlearning",
+      "category": "邻近参数遗忘与持续学习",
+      "framework": "ResNet-18；VGG-16；MobileNetV2；SISA等unlearning",
+      "organization": "模型权重里的训练影响；无Agent Memory",
+      "retrieval": "不适用文本记忆retrieval",
+      "datasets": "CIFAR-10；TinyImageNet（100-class子集）",
+      "datasetCategories": [
+        "参数遗忘与持续学习"
+      ],
+      "data_use": "图像训练及遗忘请求用于参数后门实验；无外部Agent Memory构建。",
+      "notes": "AAAI 2024 Backdoor Attacks via Machine Unlearning；已纠正误匹配到2025 Revocable Backdoor论文",
+      "locator": "Experiments: Datasets and Models；§2",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/29321",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P39",
+      "title": "FedMUA: Exploring the Vulnerabilities of Federated Learning to Malicious Unlearning Attacks",
+      "short": "FedMUA",
+      "category": "邻近参数遗忘与持续学习",
+      "framework": "FedEraser/KNOT；FC/CNN/VGG/LeNet5/ResNet18",
+      "organization": "federated model weights；FedMUA恶意unlearning",
+      "retrieval": "不适用Agent Memory retrieval",
+      "datasets": "Purchase；MNIST；CIFAR-10；Credit Score；CIFAR-100",
+      "datasetCategories": [
+        "参数遗忘与持续学习"
+      ],
+      "data_use": "表格/图像数据用于联邦训练和恶意遗忘；分别按FU系统配置；无对话记忆。",
+      "notes": "数据源与模型搭配依FU系统；不是memory bank实验",
+      "locator": "§VII-A1/A3/A5；§VII-H",
+      "url": "https://arxiv.org/abs/2501.11848",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P40",
+      "title": "Hard to Forget: Poisoning Attacks on Certified Machine Unlearning",
+      "short": "Hard to Forget",
+      "category": "邻近参数遗忘与持续学习",
+      "framework": "certified unlearning＋logistic regression",
+      "organization": "objective perturbation/影响函数；参数级遗忘",
+      "retrieval": "不适用Agent Memory retrieval",
+      "datasets": "MNIST；Binary-MNIST（3/8）；Fashion-MNIST；HAR",
+      "datasetCategories": [
+        "参数遗忘与持续学习"
+      ],
+      "data_use": "分类训练数据用于认证参数遗忘，攻击目标是增加删除计算成本；无memory库检索。",
+      "notes": "攻击提高删除计算成本；不自动迁移为记忆删除攻击",
+      "locator": "§4.1；§2–3",
+      "url": "https://arxiv.org/abs/2109.08266",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P41",
+      "title": "Attack by Unlearning: Unlearning-Induced Adversarial Attacks on Graph Neural Networks",
+      "short": "Attack by Unlearning",
+      "category": "邻近参数遗忘与持续学习",
+      "framework": "两层GCN；GIF/CEU/Gradient Ascent；SGC/GAT迁移",
+      "organization": "图训练节点/边与模型权重",
+      "retrieval": "不适用Agent Memory retrieval",
+      "datasets": "Cora；Citeseer；Pubmed；Flickr",
+      "datasetCategories": [
+        "参数遗忘与持续学习"
+      ],
+      "data_use": "图节点/边用于GNN训练、注入、遗忘及迁移；图训练数据不等于Agent图记忆。",
+      "notes": "OptimAttack注入后unlearn；graph memory与GNN训练图不是一回事",
+      "locator": "§6.1；Appendix 实现/transfer",
+      "url": "https://arxiv.org/abs/2603.18570",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P42",
+      "title": "BrainWash: A Poisoning Attack to Forget in Continual Learning",
+      "short": "BrainWash",
+      "category": "邻近参数遗忘与持续学习",
+      "framework": "ResNet-18；regularization-based multi-head CL",
+      "organization": "神经参数持续学习；BrainWash数据投毒",
+      "retrieval": "不适用Agent Memory retrieval",
+      "datasets": "10-Split CIFAR-100；10-Split miniImageNet；20-Split tinyImageNet",
+      "datasetCategories": [
+        "参数遗忘与持续学习"
+      ],
+      "data_use": "划分图像数据为连续任务，测参数投毒引起的旧任务遗忘；无删除接口式memory实验。",
+      "notes": "研究参数灾难性遗忘；只作为机制启发",
+      "locator": "§5.1–5.2",
+      "url": "https://arxiv.org/abs/2311.11995",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P43",
+      "title": "What Eviction Destroys: A Restore-Counterfactual Audit of Forgetting in Agent Memory",
+      "short": "What Eviction Destroys",
+      "category": "记忆评测与基准",
+      "framework": "自建容量受限外部记忆评测系统；FIFO / random / redundancy-aware / LLM-importance；并非提出新 memory 产品",
+      "organization": "原文记忆单元在 token 预算下保留或淘汰；用 restore counterfactual 定位错误",
+      "retrieval": "固定 BM25-lite lexical ranker，top-k=60；另设 surviving-gold 强制注入对照",
+      "datasets": "LongMemEval-S cleaned version：470 个带证据位置的问题，排除 abstention 问题",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "data_use": "带证据位置的LongMemEval-S先受预算淘汰，再问答及恢复金标准证据；区分淘汰损失、检索遗漏、使用失败。",
+      "notes": "预算8k/30k/80k；恢复注入上限2000 tokens；评测分母进一步限于 oracle-answerable 问题，不能将470直接当每格分母",
+      "locator": "§3–4；Appendix A–B",
+      "url": "https://arxiv.org/abs/2609.08279",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P44",
+      "title": "Learning What Not to Forget: Long-Horizon Agent Memory from a Few Kilobytes of Learning",
+      "short": "Learning What Not to Forget / LRE",
+      "category": "记忆组织与能力",
+      "framework": "LRE（Learned Relevance Eviction）；AppWorld ReAct-style Python/API Agent；对话保留评测系统",
+      "organization": "CPU logistic regression scorer；按预算原文保留；不在淘汰时调用LLM",
+      "retrieval": "查询未知时打分；Agent按score/token保留并保持时间顺序；对话按单元分数选取",
+      "datasets": "AppWorld（90 train，168 test_normal）；LoCoMo（10对话、5882 turns）；LongMemEval-S（最多500问题）",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "长期对话与用户记忆"
+      ],
+      "data_use": "AppWorld训练轨迹学习保留关键工具状态；LoCoMo/LongMemEval-S学turn/session保留；测QA/任务完成、保留召回和成本。",
+      "notes": "LoCoMo留一对话验证；LongMemEval-S分组5折并去除跨组复用session；AppWorld预算2048 tokens；MemoryBank在此是decay heuristic基线，不是完整MemoryBank系统复现",
+      "locator": "§3.1–3.4；§4.1–4.2；Appendix B.1–B.3/C",
+      "url": "https://arxiv.org/abs/2606.20954",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P45",
+      "title": "MemForm: Benchmarking Memory Formation Poisoning in LLM Agents",
+      "short": "MemForm",
+      "category": "记忆投毒与完整性",
+      "framework": "LangChain policy-based memory（主实验）；LlamaIndex 同协议跨框架实现",
+      "organization": "受控记忆形成协议；Content / Evidence / Scope / Selection / Path 五类接口；覆盖保留选择与巩固路径",
+      "retrieval": "在同一 memory-policy 协议下比较 clean/poisoned 形成结果及下游行为；重点是形成接口而非统一 top-k 检索器",
+      "datasets": "自建合成 MemForm：300 个生成语义家族中保留 235 个；1,016 对编译 clean/poisoned 案例，展开为 1,891 个格式实例（994 选择题＋897 自由回答）",
+      "datasetCategories": [
+        "自建安全场景与合成基准"
+      ],
+      "data_use": "控制五类记忆形成接口，比较 clean/poisoned 配对案例；测记忆形成的投毒敏感性与下游行为变化。",
+      "notes": "合成受控基准，不能当作真实发生的攻击事件；案例对数、语义家族数和格式实例数是不同统计口径。",
+      "locator": "公开正文：Benchmark construction；Memory formation interfaces；Experimental setup",
+      "url": "https://arxiv.org/abs/2610.14431",
+      "code_url": "https://github.com/opanhw/memform-code",
+      "week": "2026-10-19",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P46",
+      "title": "Controlled Memory Interference in Continual LLM Agents",
+      "short": "CMI",
+      "category": "记忆评测与基准",
+      "framework": "自建 CMI 受控干扰诊断 harness；lexical / dense / hybrid selector",
+      "organization": "保留目标记忆，改变 memory load 或 same-slot relationship；比较 paired clean/CMI 条件",
+      "retrieval": "BM25；Qwen3-Embedding-8B；top-3；含 RRF 与其他 encoder 稳健性对照",
+      "datasets": "MemoryArena TravelPlanner；PERMA；LongMemEval；HorizonBench；MEME Tracking（均转换为受控诊断案例）",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "长期对话与用户记忆"
+      ],
+      "data_use": "对比 clean/CMI，区分目标未进入检索结果、已取出但未被使用，以及关系干扰造成的下游失败；定位 retrieval-to-decision 路径。",
+      "notes": "公开仓库不分发原始或转换数据；需按上游来源重构，部分步骤依赖 API；协议等价重构不保证样本逐字相同。",
+      "locator": "公开正文：Benchmark / Retrieval / CMI protocol；仓库 README 的 Source-only reconstruction",
+      "url": "https://arxiv.org/abs/2608.07622",
+      "code_url": "https://github.com/Dawn-Buendia/Controlled-Memory-Interference-in-Continual-LLM-Agents",
+      "week": "2026-10-19",
+      "provenance": "论文设置整理；未运行复现。"
+    }
+  ],
+  "mentioned": [
+    {
+      "id": "P02",
+      "title": "MemoryBank: Enhancing Large Language Models with Long-Term Memory",
+      "short": "MemoryBank",
+      "category": "记忆组织与能力",
+      "framework": "MemoryBank；宿主 SiliconFriend",
+      "organization": "对话→事件摘要→用户画像；遗忘曲线更新",
+      "retrieval": "双塔 dense retrieval；FAISS 索引",
+      "datasets": "自建中英模拟对话（15 用户×10 天，194 探测题）；真实用户案例；38k 心理对话（微调）",
+      "datasetCategories": [
+        "长期对话与用户记忆"
+      ],
+      "notes": "模拟评测集与微调语料分开；没有把它称为 LoCoMo",
+      "locator": "§2.1–2.3；§3；§4.2",
+      "url": "https://arxiv.org/abs/2305.10250",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P04",
+      "title": "AgentPoison: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases",
+      "short": "AgentPoison",
+      "category": "记忆投毒与完整性",
+      "framework": "Agent-Driver；ReAct；EHRAgent",
+      "organization": "经验库或知识库；AgentPoison 是攻击方法",
+      "retrieval": "对比学习 retriever；DPR/REALM；embedding 迁移测试",
+      "datasets": "Agent-Driver/nuScenes 任务；StrategyQA＋Wikipedia；EHRAgent 医疗任务",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "医疗与专业领域",
+        "RAG与检索问答"
+      ],
+      "notes": "Agent-Driver 23k 经验，EHRAgent 扩至700；医疗源库名称须与代码配置再核对",
+      "locator": "§4.1；Appendix A.2.1",
+      "url": "https://arxiv.org/abs/2407.12784",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    },
+    {
+      "id": "P05",
+      "title": "Memory Injection Attacks on LLM Agents via Query-Only Interaction",
+      "short": "MINJA",
+      "category": "记忆投毒与完整性",
+      "framework": "RAP；EHRAgent；自建 CoT QA Agent",
+      "organization": "query＋trajectory/code/reasoning-answer 经验库",
+      "retrieval": "RAP/EHR: MiniLM cosine，k=3/4；QA: ada-002，k=5",
+      "datasets": "WebShop；MIMIC-III；eICU；MMLU",
+      "datasetCategories": [
+        "Agent任务与执行轨迹",
+        "医疗与专业领域",
+        "通用问答与推理"
+      ],
+      "notes": "MINJA 是攻击方法；只成功写入与全部写入的策略因宿主而异",
+      "locator": "§5.1 Memory Banks of the Agents",
+      "url": "https://doi.org/10.52202/085713-1554",
+      "week": "2026-10-10",
+      "provenance": "论文设置整理；未运行复现。"
+    }
+  ]
+};
